@@ -95,4 +95,4 @@ Route::get('link',function(){
  Route::post('/submit',function(){
     return 'date enter  ';
  })->name('submit');
- 
+//   get
