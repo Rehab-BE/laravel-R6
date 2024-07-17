@@ -1,17 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('cv', function () {
-    return view('cv');
-});
-Route::view('cv','cv');
+// Route::get('cv', function () {
+//     return view('cv');
+// });
+Route::view('cv', 'cv');
 
 // Route::get('w', function () {
 //     return "Hey rehab";
@@ -50,28 +49,28 @@ Route::prefix('accounts')->group(function () {
 });
 
 // cars
-Route::prefix('cars')->group(function(){
+Route::prefix('cars')->group(function () {
     Route::prefix('usa')->group(function () {
-     Route::get('',function(){
-        return 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ad reprehenderit voluptates voluptas nisi velit quos beatae explicabo esse culpa?';
-     });
-     Route::get('ford',function(){
-        return 'made in usa';
-     });
-     Route::get('tesla',function(){
-        return 'made in usa';
-     });
+        Route::get('', function () {
+            return 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ad reprehenderit voluptates voluptas nisi velit quos beatae explicabo esse culpa?';
+        });
+        Route::get('ford', function () {
+            return 'made in usa';
+        });
+        Route::get('tesla', function () {
+            return 'made in usa';
+        });
     });
     Route::prefix('ger')->group(function () {
-        Route::get('mercedes',function(){
+        Route::get('mercedes', function () {
             return 'made in ger';
-         });
-         Route::get('audi',function(){
+        });
+        Route::get('audi', function () {
             return 'made in ger';
-         });
-         Route::get('volkswagen',function(){
+        });
+        Route::get('volkswagen', function () {
             return 'made in ger';
-         });
+        });
     });
 });
 
@@ -79,20 +78,39 @@ Route::prefix('cars')->group(function(){
 //     return redirect('/');
 // });
 
-Route::get('link',function(){
-    $url= route('tr');
+Route::get('link', function () {
+    $url = route('tr');
     return "<a href='$url'>go to welcom</a>";
- });
+});
 
- Route::get('hello',function(){
+Route::get('hello', function () {
     return 'hello rehab';
- })->name('tr');
+})->name('tr');
 
- Route::get('login',function(){
+Route::get('login', function () {
     return view('login');
- });
+});
 
- Route::post('/submit',function(){
-    return 'date enter  ';
- })->name('submit');
-//   get
+Route::post('/submit', function () {
+    return 'date enter';
+})->name('submit');
+
+//  task3
+
+Route::get('contact_task3', function () {
+    return view('contact_task3');
+});
+
+Route::post('send', function (Request $request) {
+    $name = $request->input('name');
+    $email = $request->input('email');
+    $subject = $request->input('subject');
+    $message = $request->input('message');
+
+    $info = "Name: " . $name . '<br>';
+    $info .= "Email: " . $email . '<br>';
+    $info .= "Subject: " . $subject .'<br>';
+    $info .= "Message: " . $message;
+
+    return $info;
+})->name('send');
