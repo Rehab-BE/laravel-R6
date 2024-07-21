@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ExampleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ClassController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -114,3 +117,13 @@ Route::post('send', function (Request $request) {
 
     return $info;
 })->name('send');
+
+Route::get('login', [ExampleController::class,'login']);
+Route::post('date', [ExampleController::class,'receive'])->name('date');
+
+Route::get('cars/create',[CarController::class, 'create'])->name('cars.create');
+Route::post('cars/store',[CarController::class, 'store'])->name('cars.store');
+
+// task 4
+Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
+Route::post('classes/store',[ClassController::class, 'store'])->name('classes.store');

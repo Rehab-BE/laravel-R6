@@ -12,7 +12,7 @@
 
 <div class="container">
   <h2>Vertical (basic) form</h2>
-  <form action="{{route('submit')}}" method="POST">
+  <form action="{{route('date')}}" method="POST">
   @csrf  
   <div class="form-group">
       <label for="email">Email:</label>
