@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Class1 extends Model
 {
     use HasFactory;
-
+    
+    protected $table='classes';
     protected $fillable = [
         'class_name',
         'capacity',
@@ -17,5 +18,5 @@ class Class1 extends Model
         'time_from',
         'time_to',
     ];
-}
+    }
 

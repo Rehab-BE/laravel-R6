@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Class1;
+use Illuminate\Http\Request;
 
 class ClassController extends Controller
 {
@@ -12,7 +12,8 @@ class ClassController extends Controller
      */
     public function index()
     {
-        //
+        $classes = class1::get();
+        return view('classes', compact('classes'));
     }
 
     /**
@@ -22,30 +23,21 @@ class ClassController extends Controller
     {
         return view('add_class');
     }
-    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        
-        $class_name='English';
-        $capacity='4';
-        $price='5600';
-        $time_from='4';
-        $time_to='5';
-        $is_fulled='yes';
-
         Class1::create([
-        'class_name'=> $class_name,
-        'capacity'=>$capacity,
-        'price'=>$price,
-        'time_from'=>$time_from,
-        'time_to'=>$time_to,
-        'is_fulled'=>$is_fulled,
+            'class_name' => $request->class_name,
+            'capacity' => $request->capacity,
+            'price' => $request->price,
+            'time_from' => $request->time_from,
+            'time_to' => $request->time_to,
+            'is_fulled' => isset($request->is_fulled),
         ]);
-        return "date";
+        return "date insert successfully";
     }
 
     /**
@@ -61,7 +53,8 @@ class ClassController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $class = Class1::findOrFail($id);
+        return view('edit_class', compact('class'));
     }
 
     /**
@@ -69,7 +62,7 @@ class ClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         //    
     }
 
     /**

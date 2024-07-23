@@ -12,7 +12,9 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = car::get();
+
+        return view('cars', compact('cars'));
     }
 
     /**
@@ -28,19 +30,19 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-    //    dd($request); 
-    $carTitle= 'mercedes';
-    $price= '45';
-    $description= 'test';
-    $published='1';
-
+    // if(isset($request->published)){
+    //     $pub =true;
+    // }else{
+    //     $pub =false;
+    // }
+    
     Car::create([
-        'carTitle' => $carTitle,
-        'price'=> $price,
-        'description'=> $description,
-        'published'=> $published,
+        'carTitle' => $request->car_title,
+        'price'=> $request->price,
+        'description'=> $request->description,
+        'published'=> isset($request->published),
     ]);
-    return "date";
+    return "date insert successfully";
     }
 
     /**
@@ -56,7 +58,8 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+          $car = Car::findOrFail($id);
+        return view('edit_car',compact('car'));
     }
 
     /**

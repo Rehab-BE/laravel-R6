@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
+use PhpParser\Node\Stmt\ClassConst;
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,30 +53,30 @@ Route::prefix('accounts')->group(function () {
 });
 
 // cars
-Route::prefix('cars')->group(function () {
-    Route::prefix('usa')->group(function () {
-        Route::get('', function () {
-            return 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ad reprehenderit voluptates voluptas nisi velit quos beatae explicabo esse culpa?';
-        });
-        Route::get('ford', function () {
-            return 'made in usa';
-        });
-        Route::get('tesla', function () {
-            return 'made in usa';
-        });
-    });
-    Route::prefix('ger')->group(function () {
-        Route::get('mercedes', function () {
-            return 'made in ger';
-        });
-        Route::get('audi', function () {
-            return 'made in ger';
-        });
-        Route::get('volkswagen', function () {
-            return 'made in ger';
-        });
-    });
-});
+// Route::prefix('cars')->group(function () {
+//     Route::prefix('usa')->group(function () {
+//         Route::get('', function () {
+//             return 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque ad reprehenderit voluptates voluptas nisi velit quos beatae explicabo esse culpa?';
+//         });
+//         Route::get('ford', function () {
+//             return 'made in usa';
+//         });
+//         Route::get('tesla', function () {
+//             return 'made in usa';
+//         });
+//     });
+//     Route::prefix('ger')->group(function () {
+//         Route::get('mercedes', function () {
+//             return 'made in ger';
+//         });
+//         Route::get('audi', function () {
+//             return 'made in ger';
+//         });
+//         Route::get('volkswagen', function () {
+//             return 'made in ger';
+//         });
+//     });
+// });
 
 // Route::fallback(function(){
 //     return redirect('/');
@@ -121,9 +122,18 @@ Route::post('send', function (Request $request) {
 Route::get('login', [ExampleController::class,'login']);
 Route::post('date', [ExampleController::class,'receive'])->name('date');
 
+
+
+Route::get('cars',[CarController::class, 'index'])->name('cars.index');
 Route::get('cars/create',[CarController::class, 'create'])->name('cars.create');
 Route::post('cars/store',[CarController::class, 'store'])->name('cars.store');
+Route::get('cars/{id}',[CarController::class, 'edit'])->name('cars.edit');
+
+
 
 // task 4
 Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
 Route::post('classes/store',[ClassController::class, 'store'])->name('classes.store');
+// task 5
+Route::get('classes',[ClassController::class, 'index'])->name('classes.index');
+Route::get('classes/{id}',[ClassController::class, 'edit'])->name('classes.edit');
