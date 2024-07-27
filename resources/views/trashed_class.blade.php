@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All Car</title>
+  <title>Trashed Class</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,34 +23,41 @@
   <main>
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
-        <h2 class="fw-bold fs-2 mb-5 pb-2">All Cars</h2>
+        <h2 class="fw-bold fs-2 mb-5 pb-2">Trashed Classes</h2>
         <table class="table table-hover">
           <thead>
             <tr class="table-dark">
-              <th scope="col">Car Title</th>
+            <th scope="col">Class Name</th>
+              <th scope="col">Capacity</th>
+              <th scope="col">Is Fulled</th>
               <th scope="col">Price</th>
-              <th scope="col">Description</th>
-              <th scope="col">Published</th>
+              <th scope="col">Time From</th>
+              <th scope="col">Time to</th>
               <th scope="col">Edit</th>
               <th scope="col">Show</th>
+              <th scope="col">Premenant Delete</th>
               <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($cars as $car)
+            @foreach($classes as $class1)
             <tr>
-              <td scope="row">{{$car['carTitle']}}</td>
-              <td>{{$car['price']}}</td>
-              <td>{{Str::limit($car['description'],10)}}</td>
-              <td>{{$car['published']=="1" ? "YES" : "NO"}}</td>
-              <td><a href="{{(route('cars.edit', $car['id']))}}">Edit</a></td>
-              <td><a href="{{(route('cars.show', $car['id']))}}">Show</a></td>
-              <!-- <td><a href="{{(route('cars.destroy', $car['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
+            <td scope="row">{{$class1['class_name']}}</td>
+              <td>{{$class1['capacity']}}</td>
+              <td>{{$class1['is_fulled']=="1" ? "YES" : "NO"}}</td>
+              <td>{{$class1['price']}}</td>
+              <td>{{ \Carbon\Carbon::parse($class1['time_from'])->format('h:i A') }}</td>
+              <td>{{ \Carbon\Carbon::parse($class1['time_to'])->format('h:i A') }}</td>
+              <td><a href="{{(route('classes.edit', $class1['id']))}}">Edit</a></td>
+              <td><a href="{{(route('classes.show', $class1['id']))}}">Show</a></td>
+              <!-- <td><a href="{{(route('classes.destroy', $class1['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
+              <td><a href="#">Delete</a></td>
+
               <td>
-                <form action="{{route('cars.destroy')}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
+                <form action="{{route('classes.destroy')}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
                   @csrf
                   @method('DELETE')
-                  <input type="hidden" name="id" value="{{$car->id}}">
+                  <input type="hidden" name="id" value="{{$class1->id}}">
                   <input type="submit" value="delete">
                 </form>
               </td>

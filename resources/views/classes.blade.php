@@ -34,6 +34,8 @@
               <th scope="col">Time From</th>
               <th scope="col">Time to</th>
               <th scope="col">Edit</th>
+              <th scope="col">Show</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +48,17 @@
               <td>{{ \Carbon\Carbon::parse($class1['time_from'])->format('h:i A') }}</td>
               <td>{{ \Carbon\Carbon::parse($class1['time_to'])->format('h:i A') }}</td>
               <td><a href="{{(route('classes.edit', $class1['id']))}}">Edit</a></td>
+              <td><a href="{{(route('classes.show', $class1['id']))}}">Show</a></td>
+              <!-- <td><a href="{{(route('classes.destroy', $class1['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
+               
+              <td>
+                <form action="{{route('classes.destroy')}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
+                  @csrf
+                  @method('DELETE')
+                  <input type="hidden" name="id" value="{{$class1->id}}">
+                  <input type="submit" value="delete">
+                </form>
+              </td>
             </tr>
             @endforeach
           </tbody>

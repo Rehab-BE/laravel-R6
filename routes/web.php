@@ -127,13 +127,32 @@ Route::post('date', [ExampleController::class,'receive'])->name('date');
 Route::get('cars',[CarController::class, 'index'])->name('cars.index');
 Route::get('cars/create',[CarController::class, 'create'])->name('cars.create');
 Route::post('cars/store',[CarController::class, 'store'])->name('cars.store');
-Route::get('cars/{id}',[CarController::class, 'edit'])->name('cars.edit');
-
-
+Route::get('cars/{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
+Route::put('cars/{id}',[CarController::class, 'update'])->name('cars.update');
+Route::get('cars/{id}/show',[CarController::class, 'show'])->name('cars.show');
+// Route::get('cars/{id}/delete',[CarController::class, 'destroy'])->name('cars.destroy');
+Route::delete('delete',[CarController::class, 'destroy'])->name('cars.destroy');
+Route::get('cars/trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
 
 // task 4
 Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
 Route::post('classes/store',[ClassController::class, 'store'])->name('classes.store');
 // task 5
 Route::get('classes',[ClassController::class, 'index'])->name('classes.index');
-Route::get('classes/{id}',[ClassController::class, 'edit'])->name('classes.edit');
+Route::get('classes/{id}/edit',[ClassController::class, 'edit'])->name('classes.edit');
+// task 6
+Route::put('classes/{id}',[ClassController::class, 'update'])->name('classes.update');
+Route::get('classes/{id}/show',[ClassController::class, 'show'])->name('classes.show');
+// Route::get('classes/{id}/delete',[ClassController::class, 'destroy'])->name('classes.destroy');
+Route::delete('delete',[ClassController::class, 'destroy'])->name('classes.destroy');
+Route::get('classes/trashed',[ClassController::class,'showDeleted'])->name('classes.showDeleted');
+
+// PATCH: it is used to update an existing entity with new information. 
+// You can't patch an entity that doesn't exist. You would use this when you have a simple update to perform, e.g. changing a user's name.
+// partially updates the resource into the server mapped by the provided data
+
+// PUT: it is used to set an entity's information completely. PUTting is similar to POSTing, except that it will overwrite the entity if already exists or create it otherwise. 
+// You could use a PUT to write a user to your database that may already be in it.
+// replaces the existing resource by the new one.
+// so
+// PUT means replace the entire resource with given data, while PATCH means replace only specified fields.
