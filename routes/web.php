@@ -124,15 +124,19 @@ Route::post('date', [ExampleController::class,'receive'])->name('date');
 
 
 
-Route::get('cars',[CarController::class, 'index'])->name('cars.index');
-Route::get('cars/create',[CarController::class, 'create'])->name('cars.create');
-Route::post('cars/store',[CarController::class, 'store'])->name('cars.store');
-Route::get('cars/{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
-Route::put('cars/{id}',[CarController::class, 'update'])->name('cars.update');
-Route::get('cars/{id}/show',[CarController::class, 'show'])->name('cars.show');
+Route::prefix('cars')->group(function(){
+    Route::get('',[CarController::class, 'index'])->name('cars.index');
+    Route::get('create',[CarController::class, 'create'])->name('cars.create');
+    Route::post('store',[CarController::class, 'store'])->name('cars.store');
+    Route::get('{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
+    Route::put('{id}',[CarController::class, 'update'])->name('cars.update');
+    Route::get('{id}/show',[CarController::class, 'show'])->name('cars.show');
 // Route::get('cars/{id}/delete',[CarController::class, 'destroy'])->name('cars.destroy');
-Route::delete('delete',[CarController::class, 'destroy'])->name('cars.destroy');
-Route::get('cars/trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
+    Route::delete('delete/cars',[CarController::class, 'destroy'])->name('cars.destroy');
+    Route::get('trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
+    Route::patch('{id}',[CarController::class,'restore'])->name('cars.restore');
+    Route::delete('{id}',[CarController::class, 'forcedestroy'])->name('cars.forcedestroy');
+});
 
 // task 4
 Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
@@ -156,3 +160,5 @@ Route::get('classes/trashed',[ClassController::class,'showDeleted'])->name('clas
 // replaces the existing resource by the new one.
 // so
 // PUT means replace the entire resource with given data, while PATCH means replace only specified fields.
+Route::patch('classes/{id}',[ClassController::class,'restore'])->name('classes.restore');
+Route::delete('classes/{id}',[ClassController::class, 'forcedestroy'])->name('classes.forcedestroy');
