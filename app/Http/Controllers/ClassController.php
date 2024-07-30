@@ -30,14 +30,17 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        Class1::create([
-            'class_name' => $request->class_name,
-            'capacity' => $request->capacity,
-            'price' => $request->price,
-            'time_from' => $request->time_from,
-            'time_to' => $request->time_to,
-            'is_fulled' => isset($request->is_fulled),
+        $data = $request->validate([
+         'class_name' =>'required|string',
+         'capacity' =>'required|numeric',
+         'price' =>'required|numeric',
+         'time_from'=>'required|date_format:H:i',
+         'time_to'=>'required|date_format:H:i',
         ]);
+        $data['is_fulled']=isset($request->is_fulled);
+       
+        Class1::create($data);
+
         return redirect()->route('classes.index');
     }
 
