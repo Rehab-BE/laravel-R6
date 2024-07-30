@@ -37,13 +37,13 @@ class CarController extends Controller
     // }else{
     //     $pub =false;
     // }
-    $data = $request->validate([
-        'car_title'=>'required|string',
-        'description'=>'required|string|max:100',
-        'price' => 'required|numeric', 
-    ]); 
-    $data['published'] = isset($request->published);
-    Car::create([$data]);
+    
+    Car::create([
+        'carTitle' => $request->car_title,
+        'price'=> $request->price,
+        'description'=> $request->description,
+        'published'=> isset($request->published),
+    ]);
     return redirect()->route('cars.index');
     }
 
@@ -103,16 +103,4 @@ class CarController extends Controller
        $cars = Car::onlyTrashed()->get();
        return view('trashed_car', compact('cars'));
     }
-
-    public function restore(string $id)
-    {
-        Car::where('id', $id)->restore();
-        return redirect()->route('cars.showDeleted');
-    }
-    public function forcedestroy(string $id)
-    {
-        Car::where('id',$id)->forceDelete();
-        return  redirect()->route('cars.index');
-    }
-
 }

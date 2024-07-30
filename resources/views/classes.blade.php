@@ -45,8 +45,8 @@
               <td>{{$class1['capacity']}}</td>
               <td>{{$class1['is_fulled']=="1" ? "YES" : "NO"}}</td>
               <td>{{$class1['price']}}</td>
-              <td>{{ Carbon\Carbon::parse($class1['time_from'])->format('h:i A') }}</td>
-              <td>{{ Carbon\Carbon::parse($class1['time_to'])->format('h:i A') }}</td>
+              <td>{{ \Carbon\Carbon::parse($class1['time_from'])->format('h:i A') }}</td>
+              <td>{{ \Carbon\Carbon::parse($class1['time_to'])->format('h:i A') }}</td>
               <td><a href="{{(route('classes.edit', $class1['id']))}}">Edit</a></td>
               <td><a href="{{(route('classes.show', $class1['id']))}}">Show</a></td>
               <!-- <td><a href="{{(route('classes.destroy', $class1['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
