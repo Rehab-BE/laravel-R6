@@ -37,16 +37,8 @@ class ClassController extends Controller
          'time_from' =>'required|date_format:H:i',
          'time_to' =>'required|date_format:H:i',
         ]);
+
         $data['is_fulled']=isset($request->is_fulled);
-        // Class1::create([
-        //     'class_name' => $request->class_name,
-        //     'capacity' => $request->capacity,
-        //     'price' => $request->price,
-        //     'time_from' => $request->time_from,
-        //     'time_to' => $request->time_to,
-        //     'is_fulled' => isset($request->is_fulled),
-        // ]);
-        
         Class1::create($data);
         return redirect()->route('classes.index');
     }
