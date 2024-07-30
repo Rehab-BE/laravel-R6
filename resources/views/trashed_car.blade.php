@@ -31,9 +31,8 @@
               <th scope="col">Price</th>
               <th scope="col">Description</th>
               <th scope="col">Published</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Show</th>
-              <th scope="col">Permenant Delete</th>
+              <th scope="col">Restore</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -43,18 +42,18 @@
               <td>{{$car['price']}}</td>
               <td>{{Str::limit($car['description'],10)}}</td>
               <td>{{$car['published']=="1" ? "YES" : "NO"}}</td>
-              <td><a href="{{(route('cars.edit', $car['id']))}}">Edit</a></td>
-              <td><a href="{{(route('cars.show', $car['id']))}}">Show</a></td>
-              <!-- <td><a href="{{(route('cars.destroy', $car['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
-              <td><a href="#" >Delete</a></td>
-              <td>
-                <form action="{{route('cars.destroy')}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
+              <td> 
+                <form action="{{route('cars.restore',$car['id'])}}" method="POST" >
                   @csrf
-                  @method('DELETE')
-                  <input type="hidden" name="id" value="{{$car->id}}">
-                  <input type="submit" value="delete">
+                  @method('patch')
+                 <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
                 </form>
               </td>
+              <td><form action="{{route('cars.forcedestroy',$car['id'])}}" method="POST" >
+                  @csrf
+                  @method('DELETE')
+                 <button type="submit" class="btn btn-link m-0 p-0">Delete</button>
+                </form></td>
             </tr>
             @endforeach
           </tbody>
