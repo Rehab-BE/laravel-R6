@@ -33,7 +33,9 @@
               <th scope="col">Price</th>
               <th scope="col">Time From</th>
               <th scope="col">Time to</th>
-              <th scope="col">Restore</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Show</th>
+              <th scope="col">Premenant Delete</th>
               <th scope="col">Delete</th>
             </tr>
           </thead>
@@ -46,18 +48,13 @@
               <td>{{$class1['price']}}</td>
               <td>{{ \Carbon\Carbon::parse($class1['time_from'])->format('h:i A') }}</td>
               <td>{{ \Carbon\Carbon::parse($class1['time_to'])->format('h:i A') }}</td>
-              <td> 
-                <form action="{{route('classes.restore',$class1['id'])}}" method="POST" >
-                  @csrf
-                  @method('patch')
-                 <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
-                </form>
-              </td>
+              <td><a href="{{(route('classes.edit', $class1['id']))}}">Edit</a></td>
+              <td><a href="{{(route('classes.show', $class1['id']))}}">Show</a></td>
               <!-- <td><a href="{{(route('classes.destroy', $class1['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
-              <!-- <td><a href="#">Delete</a></td> -->
+              <td><a href="#">Delete</a></td>
 
               <td>
-                <form action="{{route('classes.forcedestroy',$class1['id'])}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
+                <form action="{{route('classes.destroy')}}" method="POST" onsubmit="confirm('Are you sure you want to delete?')">
                   @csrf
                   @method('DELETE')
                   <input type="hidden" name="id" value="{{$class1->id}}">

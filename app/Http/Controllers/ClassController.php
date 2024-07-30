@@ -38,16 +38,9 @@ class ClassController extends Controller
          'time_to'=>'required|date_format:H:i',
         ]);
         $data['is_fulled']=isset($request->is_fulled);
-        // Class1::create([
-        //     'class_name' => $request->class_name,
-        //     'capacity' => $request->capacity,
-        //     'price' => $request->price,
-        //     'time_from' => $request->time_from,
-        //     'time_to' => $request->time_to,
-        //     'is_fulled' => isset($request->is_fulled),
-        // ]);
        
         Class1::create($data);
+
         return redirect()->route('classes.index');
     }
 
@@ -106,17 +99,5 @@ class ClassController extends Controller
     {
        $classes = Class1::onlyTrashed()->get();
        return view('trashed_class', compact('classes'));
-    }
-
-    public function restore(string $id)
-    {
-        Class1::where('id', $id)->restore();
-        return redirect()->route('classes.showDeleted');
-    }
-
-    public function forcedestroy(string $id)
-    {
-        Class1::where('id',$id)->forceDelete();
-        return  redirect()->route('classes.index');
     }
 }
