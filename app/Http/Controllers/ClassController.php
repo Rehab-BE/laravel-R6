@@ -33,10 +33,9 @@ class ClassController extends Controller
         $data = $request->validate([
          'class_name' =>'required|string',
          'capacity' =>'required|numeric',
-         'price' =>'required|decimal:1',
-         'time_from' =>'required|date_format:h:i A',
-         'time_to' =>'required|date_format:h:i A',
-         
+         'price' =>'required|numeric',
+         'time_from'=>'required|date_format:H:i',
+         'time_to'=>'required|date_format:H:i',
         ]);
         $data['is_fulled']=isset($request->is_fulled);
         // Class1::create([
@@ -47,7 +46,7 @@ class ClassController extends Controller
         //     'time_to' => $request->time_to,
         //     'is_fulled' => isset($request->is_fulled),
         // ]);
-        dd($data);
+       
         Class1::create($data);
         return redirect()->route('classes.index');
     }
