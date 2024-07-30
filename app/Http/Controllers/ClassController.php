@@ -36,6 +36,7 @@ class ClassController extends Controller
          'price' =>'required|decimal:1',
          'time_from' =>'required|date_format:h:i A',
          'time_to' =>'required|date_format:h:i A',
+         
         ]);
         $data['is_fulled']=isset($request->is_fulled);
         // Class1::create([
