@@ -24,34 +24,61 @@
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
         <h2 class="fw-bold fs-2 mb-5 pb-2">Edit Car</h2>
-        <form action="{{route('cars.update', $car->id)}}" method="POST" class="px-md-5">
+        <form action="{{route('cars.update', $car->id)}}" method="POST" class="px-md-5" enctype="multipart/form-data">
           @csrf
           @method('put')
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Car Title:</label>
             <div class="col-md-10">
-              <input type="text" placeholder="BMW" class="form-control py-2" name='car_title' value="{{$car->carTitle}}" />
+              <input type="text" placeholder="BMW" class="form-control py-2" name='carTitle' value="{{old('carTitle',$car->carTitle)}}" />
+              @error('carTitle')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Price:</label>
             <div class="col-md-10">
-              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name='price' value="{{$car->price}}" />
+              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name='price' value="{{old('price',$car->price)}}"/>
+              @error('price')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Description:</label>
             <div class="col-md-10">
-              <textarea  id="" cols="30" rows="5" class="form-control py-2" name='description'>{{$car->description}}</textarea>
+              <textarea  id="" cols="30" rows="5" class="form-control py-2" name='description'>{{old('description',$car->description)}}</textarea>
+              @error('description')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
-          <hr>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Published:</label>
             <div class="col-md-10">
-              <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name='published' @checked($car->published)/>
+              <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name='published' @checked(old('published',$car->published))/>
+              @error('published')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
+          <hr>
+            <div class="form-group mb-3 row">
+              <label class="form-label col-md-2 fw-bold text-md-end" for="">Image:</label>
+               <div class="col-sm-10">
+                <input type="file" class="form-control" id="image" name="image" value="{{old('image',$car->image)}}">
+                @error('image')
+                  <div class="alert alert-warning">{{$message}}</div>
+                @enderror
+            </div>
+          </div>
+          <div class="form-group mb-3 row">
+            <label class="form-label col-md-2 fw-bold text-md-end" for=""></label>
+          <div class="col-sm-10">
+          <img src="{{ asset($car->image) }}" style="width: 30%;height: 100%"/>
+          </div>
+            </div>
           <div class="text-md-end">
             <button class="btn mt-4 btn-secondary text-white fs-5 fw-bold border-0 py-2 px-md-5">
               Edit Car

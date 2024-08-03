@@ -24,25 +24,34 @@
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
         <h2 class="fw-bold fs-2 mb-5 pb-2">Edit Class</h2>
-        <form action="{{route('classes.update', $class->id)}}" method="POST" class="px-md-5">
+        <form action="{{route('classes.update', $class->id)}}" method="POST" class="px-md-5"  enctype="multipart/form-data">
           @csrf
           @method('put')
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Class Name:</label>
             <div class="col-md-10">
-              <input type="text" placeholder="English Class" class="form-control py-2" name='class_name' value="{{$class->class_name}}" />
+              <input type="text" placeholder="English Class" class="form-control py-2" name='class_name' value="{{old('class_name',$class->class_name)}}" />
+              @error('class_name')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Capacity:</label>
             <div class="col-md-10">
-              <input type="number" step="1" placeholder="Enter capacity" class="form-control py-2" name='capacity' value="{{$class->capacity}}" />
+              <input type="number" step="1" placeholder="Enter capacity" class="form-control py-2" name='capacity' value="{{old('capacity',$class->capacity)}}" />
+              @error('capacity')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Price:</label>
             <div class="col-md-10">
-              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name='price' value="{{$class->price}}"/>
+              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name='price' value="{{old('price',$class->price)}}"/>
+              @error('price')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
@@ -50,17 +59,40 @@
                 >Time:</label
               >
               <div class="col-md-10">
-                <label for="" class="form-label">From <input type="time" class="form-control" name="time_from" value="{{$class->time_from}}"></label>
-                <label for="" class="form-label">To <input type="time" class="form-control" name="time_to" value="{{$class->time_to}}"></label>
+                <label for="" class="form-label">From <input type="time" class="form-control" name="time_from" value="{{old('time_from',$class->time_from)}}"></label>
+                @error('time_from')
+                <div class="alert alert-warning">{{$message}}</div>
+                @enderror
+                <label for="" class="form-label">To <input type="time" class="form-control" name="time_to" value="{{old('time_to',$class->time_to)}}"></label>
+                @error('time_to')
+                <div class="alert alert-warning">{{$message}}</div>
+                @enderror
               </div>
             </div>
-            <hr>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Is Fulled:</label>
             <div class="col-md-10">
-              <input  type="checkbox" class="form-check-input" style="padding: 0.7rem;" name='is_fulled' @checked($class->is_fulled)/>
+              <input  type="checkbox" class="form-check-input" style="padding: 0.7rem;" name='is_fulled' @checked(old('is_fulled',$class->is_fulled))/>
+              @error('is_fulled')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
+            </div>
+            <hr>
+            <div class="form-group mb-3 row">
+              <label class="form-label col-md-2 fw-bold text-md-end" for="">Image:</label>
+               <div class="col-sm-10">
+                <input type="file" class="form-control" id="image" name="image" value="{{old('image',$class->image)}}">
+                @error('image')
+                  <div class="alert alert-warning">{{$message}}</div>
+                @enderror
             </div>
           </div>
+          <div class="form-group mb-3 row">
+            <label class="form-label col-md-2 fw-bold text-md-end" for=""></label>
+          <div class="col-sm-10">
+          <img src="{{ asset($class->image) }}" style="width: 30%;height: 100%"/>
+          </div>
+            </div>
           <div class="text-md-end">
             <button class="btn mt-4 btn-secondary text-white fs-5 fw-bold border-0 py-2 px-md-5">
               Edit Class

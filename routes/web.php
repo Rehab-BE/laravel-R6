@@ -7,6 +7,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
 use PhpParser\Node\Stmt\ClassConst;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -121,6 +122,8 @@ Route::post('send', function (Request $request) {
 
 Route::get('login', [ExampleController::class,'login']);
 Route::post('date', [ExampleController::class,'receive'])->name('date');
+Route::get('upload',[ExampleController::class, 'uploadform']);
+Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
 
 
 
@@ -129,14 +132,21 @@ Route::prefix('cars')->group(function(){
     Route::get('create',[CarController::class, 'create'])->name('cars.create');
     Route::post('store',[CarController::class, 'store'])->name('cars.store');
     Route::get('{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
-    Route::put('{id}',[CarController::class, 'update'])->name('cars.update');
+    Route::put('{id}/update',[CarController::class, 'update'])->name('cars.update');
     Route::get('{id}/show',[CarController::class, 'show'])->name('cars.show');
 // Route::get('cars/{id}/delete',[CarController::class, 'destroy'])->name('cars.destroy');
     Route::delete('delete/cars',[CarController::class, 'destroy'])->name('cars.destroy');
     Route::get('trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
     Route::patch('{id}',[CarController::class,'restore'])->name('cars.restore');
     Route::delete('{id}',[CarController::class, 'forcedestroy'])->name('cars.forcedestroy');
+    Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
 });
+
+
+
+
+
+
 
 // task 4
 Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
@@ -145,7 +155,7 @@ Route::post('classes/store',[ClassController::class, 'store'])->name('classes.st
 Route::get('classes',[ClassController::class, 'index'])->name('classes.index');
 Route::get('classes/{id}/edit',[ClassController::class, 'edit'])->name('classes.edit');
 // task 6
-Route::put('classes/{id}',[ClassController::class, 'update'])->name('classes.update');
+Route::put('classes/{id}/update',[ClassController::class, 'update'])->name('classes.update');
 Route::get('classes/{id}/show',[ClassController::class, 'show'])->name('classes.show');
 // Route::get('classes/{id}/delete',[ClassController::class, 'destroy'])->name('classes.destroy');
 Route::delete('delete',[ClassController::class, 'destroy'])->name('classes.destroy');
@@ -162,3 +172,5 @@ Route::get('classes/trashed',[ClassController::class,'showDeleted'])->name('clas
 // PUT means replace the entire resource with given data, while PATCH means replace only specified fields.
 Route::patch('classes/{id}',[ClassController::class,'restore'])->name('classes.restore');
 Route::delete('classes/{id}',[ClassController::class, 'forcedestroy'])->name('classes.forcedestroy');
+// task 8
+Route::post('classes/upload',[ClassController::class, 'upload'])->name('classes.upload');

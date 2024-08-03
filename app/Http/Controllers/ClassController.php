@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Class1;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ClassController extends Controller
 {
@@ -31,16 +32,28 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-         'class_name' =>'required|string',
-         'capacity' =>'required|numeric',
-         'price' =>'required|numeric',
-         'time_from' =>'required|date_format:H:i',
-         'time_to' =>'required|date_format:H:i',
+            'class_name' => 'required|string',
+            'capacity' => 'required|numeric',
+            'price' => 'required|numeric',
+            'time_from' => 'required|date_format:H:i',
+            'time_to' => 'required|date_format:H:i',
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
 
-        $data['is_fulled']=isset($request->is_fulled);
+        $fileName = $this->upload($request->image, 'asset/images');
+        $data['image'] = $fileName;
+        $data['is_fulled'] = isset($request->is_fulled);
         Class1::create($data);
         return redirect()->route('classes.index');
+    }
+
+    public function upload(UploadedFile $image)
+    {
+        $file_extension = $image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'asset/images';
+        $image->move($path, $file_name);
+        return $path . '/' . $file_name;
     }
 
     /**
@@ -48,7 +61,7 @@ class ClassController extends Controller
      */
     public function show(string $id)
     {
-         $class = Class1::findOrFail($id);
+        $class = Class1::findOrFail($id);
         return view('class_details', compact('class'));
     }
 
@@ -66,16 +79,37 @@ class ClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $data = [
-            'class_name' => $request->class_name,
-            'capacity' => $request->capacity,
-            'price' => $request->price,
-            'time_from' => $request->time_from,
-            'time_to' => $request->time_to,
-            'is_fulled' => isset($request->is_fulled),
-         ];
-         Class1::where('id',$id)->update($data);
-         return redirect()->route('classes.index');
+        //  $data = [
+        //     'class_name' => $request->class_name,
+        //     'capacity' => $request->capacity,
+        //     'price' => $request->price,
+        //     'time_from' => $request->time_from,
+        //     'time_to' => $request->time_to,
+        //     'is_fulled' => isset($request->is_fulled),
+        //  ];
+        //  Class1::where('id',$id)->update($data);
+        //  return redirect()->route('classes.index');
+        $data = $request->validate([
+            'class_name' => 'required|string',
+            'capacity' => 'required|numeric',
+            'price' => 'required|numeric',
+            'time_from' => 'required|date_format:H:i:s',
+            'time_to' => 'required|date_format:H:i:s',
+            'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
+        ]);
+        
+        
+
+        $class = Class1::find($id);
+        if($request->hasFile('image')) {
+            $fileName = $this->upload($request->image, 'asset/images');
+            $data['image'] = $fileName;
+        } else {
+            $data['image'] = $class->image;
+        }
+        $data['is_fulled'] = isset($request->is_fulled);
+        Class1::where('id', $id)->update($data);
+        return redirect()->route('classes.index');
     }
 
     /**
@@ -87,17 +121,17 @@ class ClassController extends Controller
     //     return redirect()->route('classes.index');
     // }
 
-    public function destroy(Request $request,):RedirectResponse
+    public function destroy(Request $request, ): RedirectResponse
     {
-        $id=$request->id;
-        Class1::where('id',$id)->delete();
+        $id = $request->id;
+        Class1::where('id', $id)->delete();
         return redirect('classes');
     }
 
     public function showDeleted()
     {
-       $classes = Class1::onlyTrashed()->get();
-       return view('trashed_class', compact('classes'));
+        $classes = Class1::onlyTrashed()->get();
+        return view('trashed_class', compact('classes'));
     }
 
     public function restore(string $id)
@@ -108,7 +142,7 @@ class ClassController extends Controller
 
     public function forcedestroy(string $id)
     {
-        Class1::where('id',$id)->forceDelete();
-        return  redirect()->route('classes.index');
+        Class1::where('id', $id)->forceDelete();
+        return redirect()->route('classes.index');
     }
 }
