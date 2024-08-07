@@ -10,6 +10,8 @@ class ExampleController extends Controller
         return view('login');
     }
 
+    
+
     function receive(Request $request){
         return $request['email']. '<br>' . $request->pwd;
     }

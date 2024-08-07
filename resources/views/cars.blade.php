@@ -47,7 +47,7 @@
               <td><a href="{{(route('cars.show', $car['id']))}}">Show</a></td>
               <!-- <td><a href="{{(route('cars.destroy', $car['id']))}}" onclick="confirm('Are you sure you want to delete?')">Delete</a></td> -->
               <td>
-                <form action="{{route('cars.destroy')}}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
+                <form action="{{route('cars.destroy',$car['id'])}}" method="POST" onsubmit="return confirm('Are you sure you want to delete?')">
                   @csrf
                   @method('DELETE')
                   <input type="hidden" name="id" value="{{$car->id}}">

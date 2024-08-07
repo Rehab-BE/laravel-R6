@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
-use PhpParser\Node\Stmt\ClassConst;
+use App\Http\Controllers\ProductController;
 
 
 Route::get('/', function () {
@@ -127,23 +127,24 @@ Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
 
 
 
-Route::prefix('cars')->group(function(){
-    Route::get('',[CarController::class, 'index'])->name('cars.index');
-    Route::get('create',[CarController::class, 'create'])->name('cars.create');
-    Route::post('store',[CarController::class, 'store'])->name('cars.store');
-    Route::get('{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
-    Route::put('{id}/update',[CarController::class, 'update'])->name('cars.update');
-    Route::get('{id}/show',[CarController::class, 'show'])->name('cars.show');
-// Route::get('cars/{id}/delete',[CarController::class, 'destroy'])->name('cars.destroy');
-    Route::delete('delete/cars',[CarController::class, 'destroy'])->name('cars.destroy');
-    Route::get('trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
-    Route::patch('{id}',[CarController::class,'restore'])->name('cars.restore');
-    Route::delete('{id}',[CarController::class, 'forcedestroy'])->name('cars.forcedestroy');
-    Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
-});
+// Route::prefix('cars')->group(function(){
+//     Route::get('',[CarController::class, 'index'])->name('cars.index');
+//     Route::get('create',[CarController::class, 'create'])->name('cars.create');
+//     Route::post('store',[CarController::class, 'store'])->name('cars.store');
+//     Route::get('{id}/edit',[CarController::class, 'edit'])->name('cars.edit');
+//     Route::put('{id}/update',[CarController::class, 'update'])->name('cars.update');
+//     Route::get('{id}/show',[CarController::class, 'show'])->name('cars.show');
+//     Route::delete('delete/cars',[CarController::class, 'destroy'])->name('cars.destroy');
+//     Route::get('trashed',[CarController::class,'showDeleted'])->name('cars.showDeleted');
+//     Route::patch('{id}',[CarController::class,'restore'])->name('cars.restore');
+//     Route::delete('{id}',[CarController::class, 'forcedestroy'])->name('cars.forcedestroy');
+//     Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
+// });
 
-
-
+Route::resource('cars', CarController::class)->only([
+   'index','create','store','edit','update','show',
+    'destroy','showDeleted','restore','forcedestroy','upload'
+]);
 
 
 
@@ -174,3 +175,8 @@ Route::patch('classes/{id}',[ClassController::class,'restore'])->name('classes.r
 Route::delete('classes/{id}',[ClassController::class, 'forcedestroy'])->name('classes.forcedestroy');
 // task 8
 Route::post('classes/upload',[ClassController::class, 'upload'])->name('classes.upload');
+
+// task 9
+Route::get('products/index', [ProductController::class,'index'])->name('products.index');
+Route::get('products/create',[ProductController::class, 'create'])->name('products.create');
+Route::post('products/store',[ProductController::class, 'store'])->name('products.store');

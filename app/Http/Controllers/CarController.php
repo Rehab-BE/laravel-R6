@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Redirect;
+use App\Traits\Common;
 
 class CarController extends Controller
 {
+    use Common;
     /**
      * Display a listing of the resource.
      */
@@ -44,21 +44,15 @@ class CarController extends Controller
             'price' => 'required|numeric',
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
-        $fileName = $this->upload($request->image, 'asset/images');
-        $data['image'] = $fileName;
+        
+        $data['image'] = $this->uploadFile( $request->image,'asset/images');
         $data['published'] = isset($request->published);
-        Car::create($data, $fileName);
+
+        Car::create($data);
         return redirect()->route('cars.index');
     }
 
-    public function upload(UploadedFile $image)
-    {
-        $file_extension = $image->getClientOriginalExtension();
-        $file_name = time() . '.' . $file_extension;
-        $path = 'asset/images';
-        $image->move($path, $file_name);
-        return $path . '/' . $file_name;
-    }
+        
 
     /**
      * Display the specified resource.
@@ -97,14 +91,13 @@ class CarController extends Controller
             'description' => 'required|string|max:100',
             'price' => 'required|numeric',
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
+            
         ]);
-        $car = Car::findOrFail($id);
+
         if ($request->hasFile('image')) {
-            $fileName = $this->upload($request->image, 'asset/images');
-            $data['image'] = $fileName;
-        } else {
-            $data['image'] = $car->image;
+            $data['image'] = $this->uploadFile( $request->image,'asset/images');
         }
+    
         $data['published'] = isset($request->published);
         Car::where('id', $id)->update($data);
         return redirect()->route('cars.index');

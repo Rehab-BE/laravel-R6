@@ -39,11 +39,11 @@ class ClassController extends Controller
             'time_to' => 'required|date_format:H:i',
             'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
-
+       
         $fileName = $this->upload($request->image, 'asset/images');
         $data['image'] = $fileName;
         $data['is_fulled'] = isset($request->is_fulled);
-        Class1::create($data);
+        Class1::create($data,$fileName);
         return redirect()->route('classes.index');
     }
 
