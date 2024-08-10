@@ -76,7 +76,7 @@
           <div class="form-group mb-3 row">
             <label class="form-label col-md-2 fw-bold text-md-end" for=""></label>
           <div class="col-sm-10">
-          <img src="{{asset('asset/images/' .$car->image)}}" style="width: 30%;height: 100%"/>
+          <img src="{{asset('asset/images/cars/'.$car->image)}}" style="width: 30%;height: 100%"/>
           </div>
             </div>
           <div class="text-md-end">

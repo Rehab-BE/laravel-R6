@@ -26,7 +26,7 @@
         <div class="card bg-light border-0">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 col-10 position-relative overflow-hidden">
-              <img src="{{ asset($class->image) }}" alt="{{ $class->class_name }}"
+              <img src="{{asset('asset/images/classes/'. $class->image)}}" alt="{{ $class->class_name }}"
                 class="card-img"
                 style="position: absolute; margin: auto; top: 50%; transform: translateY(-50%); width: 100%;height: 100%; object-fit: cover;" />
             </div>

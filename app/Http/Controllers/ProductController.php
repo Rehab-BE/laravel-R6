@@ -15,8 +15,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-
         return view('index',compact('products'));
+    }
+    
+    public function index1()
+    {
+        $products = Product::latest()->get();
+        return view('products',compact('products'));
     }
 
     /**
@@ -26,7 +31,12 @@ class ProductController extends Controller
     {
         return view('add_product');
     }
-
+      
+    public function about()
+    {
+        $products = Product::latest()->get();
+        return view('about',compact('products'));
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -38,7 +48,7 @@ class ProductController extends Controller
         'short_description' => 'required|string|max:100',
         'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
        ]);
-       $data['image'] = $this->uploadFile( $request->image,'asset/images');
+       $data['image'] = $this->uploadFile( $request->image,'asset/images/products/');
        Product::create($data);
        return redirect()->route('products.index');
     }
@@ -48,7 +58,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('product_details', compact('product'));
     }
 
     /**
@@ -56,7 +67,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product =Product::findOrFail($id);
+        return view('edit_product', compact('product'));
     }
 
     /**
@@ -64,7 +76,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string',
+            'short_description' => 'required|string|max:100',
+            'price' => 'required|numeric',
+            'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
+            
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadFile( $request->image,'asset/images/products/');
+        }
+    
+        Product::where('id', $id)->update($data);
+        return redirect()->route('products.index1');
     }
 
     /**

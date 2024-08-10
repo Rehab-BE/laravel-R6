@@ -6,9 +6,11 @@ use App\Models\Class1;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use App\Traits\Common;
 
 class ClassController extends Controller
 {
+    use Common;
     /**
      * Display a listing of the resource.
      */
@@ -40,10 +42,9 @@ class ClassController extends Controller
             'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
        
-        $fileName = $this->upload($request->image, 'asset/images');
-        $data['image'] = $fileName;
+        $data['image'] = $this->uploadFile($request->image, 'asset/images/classes/');
         $data['is_fulled'] = isset($request->is_fulled);
-        Class1::create($data,$fileName);
+        Class1::create($data,);
         return redirect()->route('classes.index');
     }
 
@@ -98,14 +99,8 @@ class ClassController extends Controller
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
         
-        
-
-        $class = Class1::find($id);
         if($request->hasFile('image')) {
-            $fileName = $this->upload($request->image, 'asset/images');
-            $data['image'] = $fileName;
-        } else {
-            $data['image'] = $class->image;
+        $data['image'] = $this->uploadFile($request->image, 'asset/images/classes/');
         }
         $data['is_fulled'] = isset($request->is_fulled);
         Class1::where('id', $id)->update($data);

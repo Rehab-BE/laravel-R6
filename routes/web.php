@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ProductController;
-
+use Illuminate\Routing\Route as RoutingRoute;
 
 Route::get('/', function () {
     return view('welcome');
@@ -180,3 +180,10 @@ Route::post('classes/upload',[ClassController::class, 'upload'])->name('classes.
 Route::get('products/index', [ProductController::class,'index'])->name('products.index');
 Route::get('products/create',[ProductController::class, 'create'])->name('products.create');
 Route::post('products/store',[ProductController::class, 'store'])->name('products.store');
+Route::get('products/about', [ProductController::class,'about'])->name('products.about');
+
+// task 10
+Route::get('products/{id}/edit',[ProductController::class, 'edit'])->name('products.edit');
+Route::put('products/update/{id}',[ProductController::class, 'update'])->name('products.update');
+Route::get('products/index1', [ProductController::class,'index1'])->name('products.index1');
+Route::get('products/{id}/show',[ProductController::class, 'show'])->name('products.show');
