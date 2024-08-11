@@ -45,7 +45,7 @@ class ProductController extends Controller
        $data= $request->validate([
         'title'=>'required|string',
         'price' =>'required|numeric',
-        'short_description' => 'required|string|max:100',
+        'short_description' => 'required|string|max:400',
         'image' => 'required|image|mimes:png,jpg,jpeg,gif|max:2048',
        ]);
        $data['image'] = $this->uploadFile( $request->image,'asset/images/products/');
@@ -78,7 +78,7 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string',
-            'short_description' => 'required|string|max:100',
+            'short_description' => 'required|string|max:400',
             'price' => 'required|numeric',
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
             
