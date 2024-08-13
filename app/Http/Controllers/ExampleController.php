@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
+use Illuminate\Support\Facades\DB;
 
 class ExampleController extends Controller
 {
@@ -25,4 +27,15 @@ class ExampleController extends Controller
         $request->image->move($path, $file_name);
         return 'Uploaded';
     }
+
+    public function test(){
+        // dd(Student::find(1)?->phone->phone_number);
+        dd(
+            DB::table('students')
+                ->join('phones', 'phones.id', '=', 'students.phone_id')
+                ->where('students.id', 1) 
+                ->first()
+        );
+    }
+    
 }

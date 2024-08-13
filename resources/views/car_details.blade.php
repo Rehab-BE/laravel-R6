@@ -48,6 +48,11 @@
               </div>
               <div class="mb-4">
                 <p class="card-text">
+                  <span class="fw-bold" value="">Category:</span><br>{{$car['category_id']}}
+                </p>
+              </div>
+              <div class="mb-4">
+                <p class="card-text">
                   <span class="fw-bold">Description:</span><br>{{$car['description']}}
                 </p>
               </div>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Traits\Common;
+use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
@@ -25,7 +27,9 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('add_car');
+        $categories = Category::select('id','category_name')->get();
+
+        return view('add_car', compact('categories'));
     }
 
     /**
@@ -40,9 +44,10 @@ class CarController extends Controller
         // }
         $data = $request->validate([
             'carTitle' => 'required|string',
-            'description' => 'required|string|max:100',
+            'description' => 'required|string|max:500',
             'price' => 'required|numeric',
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
+            'category_id' => 'required|exists:categories,id',
         ]);
         
         $data['image'] = $this->uploadFile( $request->image,'asset/images/cars');
@@ -58,9 +63,10 @@ class CarController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
+    {   
         $car = Car::findOrFail($id);
-        return view('car_details', compact('car'));
+        $categories = Category::all();
+        return view('car_details', compact('car','categories'));
     }
 
     /**
@@ -69,7 +75,9 @@ class CarController extends Controller
     public function edit(string $id)
     {
         $car = Car::findOrFail($id);
-        return view('edit_car', compact('car'));
+        $categories = Category::all();
+
+        return view('edit_car', compact('car','categories'));
     }
 
     /**
@@ -88,10 +96,10 @@ class CarController extends Controller
         //    Car::where('id',$id)->update($data);
         $data = $request->validate([
             'carTitle' => 'required|string',
-            'description' => 'required|string|max:100',
+            'description' => 'required|string|max:500',
             'price' => 'required|numeric',
             'image' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
-            
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {

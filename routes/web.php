@@ -124,7 +124,7 @@ Route::get('login', [ExampleController::class,'login']);
 Route::post('date', [ExampleController::class,'receive'])->name('date');
 Route::get('upload',[ExampleController::class, 'uploadform']);
 Route::post('upload',[ExampleController::class, 'upload'])->name('upload');
-
+Route::get('test_one_to_one', [ExampleController::class,'test']);
 
 
 // Route::prefix('cars')->group(function(){
