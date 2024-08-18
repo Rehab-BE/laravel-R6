@@ -64,9 +64,9 @@ class CarController extends Controller
      */
     public function show(string $id)
     {   
-        $car = Car::findOrFail($id);
-        $categories = Category::all();
-        return view('car_details', compact('car','categories'));
+        // $car = Car::findOrFail($id);
+        $car = Car::with('category')->findOrFail($id);
+        return view('car_details', compact('car'));
     }
 
     /**

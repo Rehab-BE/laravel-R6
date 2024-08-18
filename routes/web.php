@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Routing\Route as RoutingRoute;
+use Illuminate\Support\Facades\Mail;
+use \App\Mail\ContactusMail;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -100,25 +102,26 @@ Route::post('/submit', function () {
     return 'date enter';
 })->name('submit');
 
+
 //  task3
+// Route::get('contact_task3', function () {
+//     return view('contact_task3');
+// });
 
-Route::get('contact_task3', function () {
-    return view('contact_task3');
-});
+// Route::post('send', function (Request $request) {
+//     $name = $request->input('name');
+//     $email = $request->input('email');
+//     $subject = $request->input('subject');
+//     $message = $request->input('message');
 
-Route::post('send', function (Request $request) {
-    $name = $request->input('name');
-    $email = $request->input('email');
-    $subject = $request->input('subject');
-    $message = $request->input('message');
+//     $info = "Name: " . $name . '<br>';
+//     $info .= "Email: " . $email . '<br>';
+//     $info .= "Subject: " . $subject .'<br>';
+//     $info .= "Message: " . $message;
 
-    $info = "Name: " . $name . '<br>';
-    $info .= "Email: " . $email . '<br>';
-    $info .= "Subject: " . $subject .'<br>';
-    $info .= "Message: " . $message;
-
-    return $info;
-})->name('send');
+//     return $info;
+// })->name('send');
+// end of task 3
 
 Route::get('login', [ExampleController::class,'login']);
 Route::post('date', [ExampleController::class,'receive'])->name('date');
@@ -141,7 +144,7 @@ Route::get('test_one_to_one', [ExampleController::class,'test']);
 //     Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
 // });
 
-Route::resource('cars', CarController::class)->only([
+Route::resource('cars', CarController::class)->middleware('verified')->only([
    'index','create','store','edit','update','show',
     'destroy','showDeleted','restore','forcedestroy','upload'
 ]);
@@ -177,7 +180,7 @@ Route::delete('classes/{id}',[ClassController::class, 'forcedestroy'])->name('cl
 Route::post('classes/upload',[ClassController::class, 'upload'])->name('classes.upload');
 
 // task 9
-Route::get('products/index', [ProductController::class,'index'])->name('products.index');
+Route::get('products/index', [ProductController::class,'index'])->name('products.index')->middleware('verified');
 Route::get('products/create',[ProductController::class, 'create'])->name('products.create');
 Route::post('products/store',[ProductController::class, 'store'])->name('products.store');
 Route::get('products/about', [ProductController::class,'about'])->name('products.about');
@@ -187,3 +190,27 @@ Route::get('products/{id}/edit',[ProductController::class, 'edit'])->name('produ
 Route::put('products/update/{id}',[ProductController::class, 'update'])->name('products.update');
 Route::get('products/index1', [ProductController::class,'index1'])->name('products.index1');
 Route::get('products/{id}/show',[ProductController::class, 'show'])->name('products.show');
+
+
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// task 12
+Route::get('contact_task3', function () {
+        return view('contact_task3');
+    });
+    
+    Route::post('send', function (Request $request) {
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $subject = $request->input('subject');
+        $msg = $request->input('message');
+    
+        Mail::to('rehabadal202@gamil.com')->send(new \App\Mail\ContactusMail($name, $email, $subject, $msg));
+
+        // return back()->with('success', 'Email sent successfully!');
+        return ('Email sent successfully!');
+    })->name('send');
+    

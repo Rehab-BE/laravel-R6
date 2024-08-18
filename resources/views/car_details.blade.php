@@ -48,7 +48,7 @@
               </div>
               <div class="mb-4">
                 <p class="card-text">
-                  <span class="fw-bold" value="">Category:</span><br>{{$car['category_id']}}
+                  <span class="fw-bold" value="">Category:</span><br>{{$car->category->category_name}}
                 </p>
               </div>
               <div class="mb-4">

@@ -20,7 +20,7 @@ class Car extends Model
         'category_id',
     ];
 
-    public function categoryy(){
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 }

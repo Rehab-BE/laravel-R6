@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         Car::factory(10)->create();
         // Product::factory(100)->create();
-        // Class1::factory(50)->create();
+        // Class1::factory(2)->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

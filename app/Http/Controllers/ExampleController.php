@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ContactUsForm;
+
+use Mail;
 
 class ExampleController extends Controller
 {
+
+    function send(){
+        return view('send');
+    }
+
+
     function login(){
         return view('login');
     }
 
-    
 
     function receive(Request $request){
         return $request['email']. '<br>' . $request->pwd;
