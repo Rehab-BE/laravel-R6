@@ -4,17 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Mail\ContactUsForm;
+use Illuminate\Support\Facades\Mail;
 
-use Mail;
 
 class ExampleController extends Controller
 {
+//   task 12
+    public function contact_task3(){
+        return view('contact_task3');
+    } 
 
-    function send(){
-        return view('send');
-    }
+    public function send(Request $request) {
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $subject = $request->input('subject');
+        $msg = $request->input('message');
+    
+        Mail::to('rehabadal202@gamil.com')->send(new \App\Mail\ContactusMail($name, $email, $subject, $msg));
 
+        // return back()->with('success', 'Email sent successfully!');
+        return ('Email sent successfully!');
+    } 
 
     function login(){
         return view('login');

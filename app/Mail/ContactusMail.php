@@ -48,12 +48,12 @@ class ContactusMail extends Mailable
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.contact_us',
-        );
-    }
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'emails.contact_us',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.

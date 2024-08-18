@@ -198,19 +198,6 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // task 12
-Route::get('contact_task3', function () {
-        return view('contact_task3');
-    });
-    
-    Route::post('send', function (Request $request) {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $subject = $request->input('subject');
-        $msg = $request->input('message');
-    
-        Mail::to('rehabadal202@gamil.com')->send(new \App\Mail\ContactusMail($name, $email, $subject, $msg));
-
-        // return back()->with('success', 'Email sent successfully!');
-        return ('Email sent successfully!');
-    })->name('send');
+Route::get('contact_task3',[ExampleController::class, 'contact_task3'])->name('contact_task3');
+Route::post('send',[ExampleController::class,'send'])->name('send');
     
