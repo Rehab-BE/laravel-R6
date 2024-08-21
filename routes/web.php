@@ -3,16 +3,16 @@
 use App\Http\Controllers\ExampleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Mail;
-use \App\Mail\ContactusMail;
+
 
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('admin');
 
 // Route::get('cv', function () {
 //     return view('cv');
@@ -144,13 +144,11 @@ Route::get('test_one_to_one', [ExampleController::class,'test']);
 //     Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
 // });
 
-Route::resource('cars', CarController::class)->middleware('verified')->only([
-   'index','create','store','edit','update','show',
-    'destroy','showDeleted','restore','forcedestroy','upload'
-]);
-
-
-
+// Route::resource('cars', CarController::class)->middleware('verified')->only([
+//     'index','create','store','edit','update','show',
+//      'destroy','showDeleted','restore','forcedestroy','upload'
+//  ]);
+ 
 
 // task 4
 Route::get('classes/create',[ClassController::class, 'create'])->name('classes.create');
@@ -198,6 +196,6 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // task 12
-Route::get('contact_task3',[ExampleController::class, 'contact_task3'])->name('contact_task3');
+Route::get('contact_task3',[ExampleController::class, 'contact_task3'])->name('contact_task3')->middleware('admin');
 Route::post('send',[ExampleController::class,'send'])->name('send');
-    
+   
