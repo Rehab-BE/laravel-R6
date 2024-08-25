@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{LaravelLocalization::getCurrentLocale()}}" dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
+
+
+
 
 <head>
   <meta charset="UTF-8" />
@@ -23,32 +26,38 @@
   <main>
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
-        <h2 class="fw-bold fs-2 mb-5 pb-2">Add Car</h2>
+
+<ul>
+  <li><a href="{{ LaravelLocalization::getLocalizedURL('en') }}">{{__('cars.englishHeading')}}</a></li>
+  <li><a href="{{ LaravelLocalization::getLocalizedURL('ar') }}">{{__('cars.arabicHeading')}}</a></li>
+</ul>
+
+        <h2 class="fw-bold fs-2 mb-5 pb-2">{{__('cars.addHeading')}}</h2>
         <form action="{{route('cars.store')}}" method="POST" class="px-md-5"  enctype="multipart/form-data">
           @csrf
           <div class="form-group mb-3 row">
-            <label for="" class="form-label col-md-2 fw-bold text-md-end">Car Title:</label>
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">{{__('cars.titleHeading')}}:</label>
             <div class="col-md-10">
-              <input type="text" placeholder="BMW" class="form-control py-2" name='carTitle' value="{{old('carTitle')}}"/>
+              <input type="text" placeholder="{{__('cars.titleplaceholderHeading')}}" class="form-control py-2" name='carTitle' value="{{old('carTitle')}}"/>
               @error('carTitle')
                 <div class="alert alert-warning">{{$message}}</div>
               @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
-            <label for="" class="form-label col-md-2 fw-bold text-md-end">Price:</label>
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">{{__('cars.priceHeading')}}:</label>
             <div class="col-md-10">
-              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name='price' value="{{old('price')}}"/>
+              <input type="number" step="0.1" placeholder="{{__('cars.priceplaceholderHeading')}}" class="form-control py-2" name='price' value="{{old('price')}}"/>
               @error('price')
                 <div class="alert alert-warning">{{$message}}</div>
               @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
-            <label for="" class="form-label col-md-2 fw-bold text-md-end">Category:</label>
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">{{__('cars.categoryHeading')}}:</label>
             <div class="col-md-10">
               <select name="category_id" id="" class="form-control" required>
-               <option value="">Select Category</option>
+               <option value="">{{__('cars.categoryplaceholderHeading')}}</option>
                @foreach($categories as $category)
                <option value="{{$category->id}}" @selected(old('category_id') == $category->id)>{{$category->category_name}}</option>
                @endforeach
@@ -59,7 +68,7 @@
             </div>
           </div>
           <div class="form-group mb-3 row">
-            <label for="" class="form-label col-md-2 fw-bold text-md-end">Description:</label>
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">{{__('cars.desHeading')}}:</label>
             <div class="col-md-10">
               <textarea  id="" cols="30" rows="5" class="form-control py-2" name='description'>{{old('description')}}</textarea>
               @error('description')
@@ -68,15 +77,15 @@
             </div>
           </div>
           <div class="form-group mb-3 row">
-            <label for="" class="form-label col-md-2 fw-bold text-md-end">Published:</label>
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">{{__('cars.publishedHeading')}}:</label>
             <div class="col-md-10">
               <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name='published' @checked(old('published'))/>
             </div>
             <hr>
             <div class="form-group mb-3 row">
-              <label class="form-label col-md-2 fw-bold text-md-end" for="">Image:</label>
+              <label class="form-label col-md-2 fw-bold text-md-end" for="">{{__('cars.imageHeading')}}:</label>
                <div class="col-sm-10">
-                <input type="file" class="form-control" id="image" name="image" value="{{old('image')}}">
+                <input type="file" class="form-control" id="file" name="image" value="{{old('image')}}">
                 @error('image')
                   <div class="alert alert-warning">{{$message}}</div>
                 @enderror
@@ -84,7 +93,7 @@
           </div>
           <div class="text-md-end">
             <button class="btn mt-4 btn-secondary text-white fs-5 fw-bold border-0 py-2 px-md-5">
-              Add Car
+            {{__('cars.add1Heading')}}
             </button>
           </div>
         </form>

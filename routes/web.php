@@ -144,7 +144,8 @@ Route::get('test_one_to_one', [ExampleController::class,'test']);
 //     Route::post('upload',[CarController::class, 'upload'])->name('cars.upload');
 // });
 
-// Route::resource('cars', CarController::class)->middleware('verified')->only([
+// // ->middleware('verified')
+// Route::resource('cars', CarController::class)->only([
 //     'index','create','store','edit','update','show',
 //      'destroy','showDeleted','restore','forcedestroy','upload'
 //  ]);

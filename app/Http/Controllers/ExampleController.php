@@ -11,6 +11,7 @@ class ExampleController extends Controller
 {
 //   task 12
     public function contact_task3(){
+        session()->put('test', 'First Laravel session');
         return view('contact_task3');
     } 
 
@@ -46,6 +47,7 @@ class ExampleController extends Controller
     }
 
     public function test(){
+        dd(session('test'));
         // dd(Student::find(1)?->phone->phone_number);
         dd(
             DB::table('students')
