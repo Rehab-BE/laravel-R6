@@ -12,7 +12,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('admin');
+});
 
 // Route::get('cv', function () {
 //     return view('cv');
