@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ProductController;
-
-
+use App\Http\Controllers\SocialController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -200,3 +199,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('contact_task3',[ExampleController::class, 'contact_task3'])->name('contact_task3')->middleware('admin');
 Route::post('send',[ExampleController::class,'send'])->name('send');
    
+
+// Route::get('auth/{driver}/redirect',[SocialController::class,'redirect'])->name('social_login')
+// ->whereIn('driver');
+Route::get('auth/github/redirect',[SocialController::class,'redirect'])->name('social_login');
+Route::get('auth/githup/callback',[SocialController::class,'callback']);

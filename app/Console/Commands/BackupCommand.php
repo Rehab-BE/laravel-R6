@@ -25,11 +25,11 @@ class BackupCommand extends Command
      */
     public function handle()
     {
-        $databaseName = env('DB_DATABASE');
-        $username = env('DB_USERNAME');
-        $password = env('DB_PASSWORD');
-        $host = env('DB_HOST');
-        $port = env('DB_PORT', '3306');
+        $databaseName = config('DB_DATABASE');
+        $username = config('DB_USERNAME');
+        $password = config('DB_PASSWORD');
+        $host = config('DB_HOST');
+        $port = config('DB_PORT', '3306');
 
         $date = now()->format('Y-m-d_H-i-s');
         $backupFile = "backup/{$databaseName}_{$date}.sql";
